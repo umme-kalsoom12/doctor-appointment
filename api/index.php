@@ -1,6 +1,6 @@
 <?php
 
-// Read-only server bypass karne ke liye paths set karein
+// Paths ko read-only environment ke liye adjust karein
 $_ENV['VIEW_COMPILED_PATH'] = '/tmp';
 putenv('VIEW_COMPILED_PATH=/tmp');
 
@@ -16,12 +16,12 @@ require __DIR__ . '/../vendor/autoload.php';
 
 /*
 |--------------------------------------------------------------------------
-| Turn On The Lights
+| Turn On The Lights / Bootstrap Application
 |--------------------------------------------------------------------------
 */
 $app = require_once __DIR__ . '/../bootstrap/app.php';
 
-// Storage path ko forcefully /tmp par use karne ke liye bind karein
+// Storage directory ko temporary directory par map karein
 $app->useStoragePath('/tmp');
 
 /*
@@ -31,8 +31,9 @@ $app->useStoragePath('/tmp');
 */
 $kernel = $app->make(Illuminate\Contracts\Http\Kernel::class);
 
-$response = $kernel->handle(
-    $request = Illuminate\Http\Request::capture()
-)->send();
+$request = Illuminate\Http\Request::capture();
+$response = $kernel->handle($request);
+
+$response->send();
 
 $kernel->terminate($request, $response);
