@@ -8,4 +8,8 @@ export default defineConfig({
             refresh: true,
         }),
     ],
+    build: {
+        chunkSizeWarningLimit: 1600,
+        sourcemap: false, // Turn off sourcemaps to make the build faster
+    }
 });
