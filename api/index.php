@@ -1,6 +1,9 @@
 <?php
 
-// Cache aur config errors ko bypass karne ke liye manually handle karein
+// Cache aur view paths ke errors ko bypass karne ke liye temporary directory set karein
+$_ENV['VIEW_COMPILED_PATH'] = '/tmp';
+putenv('VIEW_COMPILED_PATH=/tmp');
+
 /*
 |--------------------------------------------------------------------------
 | Register The Auto Loader
