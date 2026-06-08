@@ -1,8 +1,11 @@
 <?php
 
-// Cache aur view paths ke errors ko bypass karne ke liye temporary directory set karein
+// Read-only server bypass karne ke liye paths set karein
 $_ENV['VIEW_COMPILED_PATH'] = '/tmp';
 putenv('VIEW_COMPILED_PATH=/tmp');
+
+$_ENV['LOG_CHANNEL'] = 'stderr';
+putenv('LOG_CHANNEL=stderr');
 
 /*
 |--------------------------------------------------------------------------
@@ -17,6 +20,9 @@ require __DIR__ . '/../vendor/autoload.php';
 |--------------------------------------------------------------------------
 */
 $app = require_once __DIR__ . '/../bootstrap/app.php';
+
+// Storage path ko forcefully /tmp par use karne ke liye bind karein
+$app->useStoragePath('/tmp');
 
 /*
 |--------------------------------------------------------------------------
